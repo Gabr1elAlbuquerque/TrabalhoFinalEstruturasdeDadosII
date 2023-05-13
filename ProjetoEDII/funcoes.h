@@ -15,4 +15,15 @@ void LerArquivo(char* nome_arquivo, int* k, int* n, char* numeros) {
     fclose(arquivo);
 }
 
-#endif
+void ConverterStrInt(char *numeros, int *valores){
+  
+  char *token;
+  int contador = 0;
+
+  token = strtok(numeros, ";");
+  while(token != NULL){
+    valores[contador] = atoi(token);
+    contador++;
+    token = strtok(NULL, ";");
+  }
+}
