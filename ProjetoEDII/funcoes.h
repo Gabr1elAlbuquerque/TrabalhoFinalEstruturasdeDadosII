@@ -3,21 +3,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-
-void LerArquivo(void){
-    FILE *arquivo;
-    char linha[100];
-    arquivo = fopen("entrada.txt","r");
-    if (arquivo == NULL)
-    {
-        printf("Erro ao abrir o arquivo");
+void LerArquivo(char* nome_arquivo, int* k, int* n, char* numeros) {
+    FILE* arquivo = fopen(nome_arquivo, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
     }
-    while (fgets(linha,100,arquivo) != NULL)
-    {
-       printf("%s", linha);
-    }
-    
+    fscanf(arquivo, "%d %d %s", k, n, numeros);
     fclose(arquivo);
 }
 
