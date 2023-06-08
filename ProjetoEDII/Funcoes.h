@@ -5,6 +5,68 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+typedef struct NoArvore{
+	int valor;
+	struct NoArvore *E;
+	struct NoArvore *D;
+}NoArvore;
+
+typedef struct Arvore{
+	NoArvore *Raiz;
+	int Tamanho;
+}Arvore;
+
+
+Arvore * ArvoreNovo(void){
+	Arvore *a = (Arvore*)malloc(sizeof(Arvore));
+	if(a != NULL){
+		a->Raiz = NULL;
+		a->Tamanho = 0;
+	}
+}
+
+int ArvoreInserir(Arvore *a, int valor){
+	if(a == NULL){
+		return 0;
+	}
+	NoArvore *novo = (NoArvore*)malloc(sizeof(NoArvore));
+	
+	if(novo == NULL){
+		return 0;
+	}
+	
+	novo->valor = valor;
+	novo->E = NULL;
+	novo->D = NULL;
+	
+	NoArvore *atual = a->Raiz;
+	NoArvore *pai = NULL;
+	
+	while(atual != NULL){
+		pai = atual;
+		if(valor < atual->valor){
+			atual = atual->E;
+		}
+		else{
+			atual = atual->D;
+		}
+	}
+	
+	if(pai == NULL){
+		a->Raiz = novo;
+	}
+	else if(valor < pai->valor){
+		pai->E = novo;
+	}
+	else{
+		pai->D = novo;
+	}
+	a->Tamanho = a->Tamanho + 1;
+	return 1;
+}
+
+
 void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
@@ -14,18 +76,29 @@ void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
     fscanf(arquivo, "%d %d %s", k, n, numeros);
 }
 
-void ConverterStrInt(char *numeros, int *valores, int *cont) {
+void ConverterStrArvore(char *numeros, Arvore *a) {
     char *token;
-    int contador = 0;
-    *cont = 0;
-
     token = strtok(numeros, ";");
     while (token != NULL) {
-        valores[contador] = atoi(token);
-        contador++;
-        *cont = contador;
+    	int valor = atoi(token);
+        ArvoreInserir(a, valor);
         token = strtok(NULL, ";");
     }
 }
+
+void MostreNo(NoArvore *no){
+	if(no != NULL){
+		MostreNo(no->E);
+		printf("%d\n",no->valor);
+		MostreNo(no->D);
+	}
+}
+
+void MostreArvore(Arvore *a){
+	if(a != NULL){
+		MostreNo(a->Raiz);
+	}
+}
+
 
 #endif
