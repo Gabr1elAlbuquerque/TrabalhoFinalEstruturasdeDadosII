@@ -7,7 +7,7 @@
 
 
 typedef struct NoArvore{
-	int valor;
+	int valor,binario;
 	struct NoArvore *E;
 	struct NoArvore *D;
 }NoArvore;
@@ -26,6 +26,13 @@ Arvore * ArvoreNovo(void){
 	}
 }
 
+int converterbinario(int num) {
+    if (num > 1) {
+        return (num % 2) + 10 * converterbinario(num / 2);
+    }
+    return num;
+}
+
 int ArvoreInserir(Arvore *a, int valor){
 	if(a == NULL){
 		return 0;
@@ -37,6 +44,7 @@ int ArvoreInserir(Arvore *a, int valor){
 	}
 	
 	novo->valor = valor;
+	novo->binario = converterbinario(novo->valor);
 	novo->E = NULL;
 	novo->D = NULL;
 	
@@ -65,7 +73,6 @@ int ArvoreInserir(Arvore *a, int valor){
 	a->Tamanho = a->Tamanho + 1;
 	return 1;
 }
-
 
 void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
     if (arquivo == NULL) {
@@ -99,6 +106,21 @@ void MostreArvore(Arvore *a){
 		MostreNo(a->Raiz);
 	}
 }
+
+void MostreNoBin(NoArvore *no){
+	if(no != NULL){
+		MostreNoBin(no->E);
+		printf("%d\n", no->binario);
+		MostreNoBin(no->D);
+	}
+}
+
+void MostreArvoreBin(Arvore *a){
+	if(a != NULL){
+		MostreNoBin(a->Raiz);
+	}
+}
+
 
 
 #endif
