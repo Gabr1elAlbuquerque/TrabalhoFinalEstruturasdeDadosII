@@ -7,7 +7,8 @@
 
 
 typedef struct NoArvore{
-	int valor,binario;
+	int valor;
+	unsigned long long binario;
 	struct NoArvore *E;
 	struct NoArvore *D;
 }NoArvore;
@@ -26,11 +27,17 @@ Arvore * ArvoreNovo(void){
 	}
 }
 
-int converterbinario(int num) {
-    if (num > 1) {
-        return (num % 2) + 10 * converterbinario(num / 2);
+unsigned long long converterbinario(unsigned long long num) {
+    unsigned long long valor_binario = 0;
+    unsigned long long posicao = 1;
+
+    while (num > 0) {
+        valor_binario += (num % 2) * posicao;
+        num /= 2;
+        posicao *= 10;
     }
-    return num;
+
+    return valor_binario;
 }
 
 int ArvoreInserir(Arvore *a, int valor){
@@ -96,7 +103,7 @@ void ConverterStrArvore(char *numeros, Arvore *a) {
 void MostreNo(NoArvore *no){
 	if(no != NULL){
 		MostreNo(no->E);
-		printf("%d\n",no->valor);
+		printf("%lld\n",no->valor);
 		MostreNo(no->D);
 	}
 }
@@ -110,7 +117,7 @@ void MostreArvore(Arvore *a){
 void MostreNoBin(NoArvore *no){
 	if(no != NULL){
 		MostreNoBin(no->E);
-		printf("%d\n", no->binario);
+		printf("%llu\n", no->binario);
 		MostreNoBin(no->D);
 	}
 }
