@@ -27,20 +27,34 @@ Arvore * ArvoreNovo(void){
 	}
 }
 
-unsigned long long converterbinario(unsigned long long num) {
-    unsigned long long valor_binario = 0;
-    unsigned long long posicao = 1;
+unsigned long long ConverterBinario(unsigned long long num, int n) {
+    unsigned long long ValorBinario = 0;
+    unsigned long long Posicao = 1;
+    int TamanhoNumero = 0;
+    unsigned long long Temp = num;
 
-    while (num > 0) {
-        valor_binario += (num % 2) * posicao;
-        num /= 2;
-        posicao *= 10;
+    while (Temp > 0) {
+        Temp /= 2;
+        TamanhoNumero++;
     }
 
-    return valor_binario;
+    int AddZero = n - TamanhoNumero;
+    
+    while (AddZero > 0) {
+        Posicao *= 10;
+        AddZero--;
+    }
+
+    while (num > 0) {
+        ValorBinario += (num % 2) * Posicao;
+        num /= 2;
+        Posicao *= 10;
+    }
+
+    return ValorBinario;
 }
 
-int ArvoreInserir(Arvore *a, int valor){
+int ArvoreInserir(Arvore *a, int valor, int n){
 	if(a == NULL){
 		return 0;
 	}
@@ -51,7 +65,7 @@ int ArvoreInserir(Arvore *a, int valor){
 	}
 	
 	novo->valor = valor;
-	novo->binario = converterbinario(novo->valor);
+	novo->binario = ConverterBinario(novo->valor, n);
 	novo->E = NULL;
 	novo->D = NULL;
 	
@@ -90,12 +104,12 @@ void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
     fscanf(arquivo, "%d %d %s", k, n, numeros);
 }
 
-void ConverterStrArvore(char *numeros, Arvore *a) {
+void ConverterStrArvore(char *numeros, Arvore *a ,int n) {
     char *token;
     token = strtok(numeros, ";");
     while (token != NULL) {
     	int valor = atoi(token);
-        ArvoreInserir(a, valor);
+        ArvoreInserir(a, valor, n);
         token = strtok(NULL, ";");
     }
 }
@@ -127,7 +141,6 @@ void MostreArvoreBin(Arvore *a){
 		MostreNoBin(a->Raiz);
 	}
 }
-
 
 
 #endif
