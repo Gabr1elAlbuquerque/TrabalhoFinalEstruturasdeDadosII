@@ -7,16 +7,16 @@ int main(int argc, char *argv[]) {
     LerArquivo(arquivo, &k, &n, numeros);
     fclose(arquivo);
 
-    printf("%d\n", k);
-    printf("%d\n", n);
-    printf("Arvore Inicio:\n");
+    //printf("%d\n", k);
+    //printf("%d\n", n);
+    //printf("Arvore Inicio:\n");
     
     
     Arvore *a = ArvoreNovo();
 
-    ConverterStrArvore(numeros,a, n);
-    MostreArvore(a);
-    printf("Arvore em binário:\n");
+    ConverterStrArvore(numeros,a);
+    //MostreArvore(a);
+    //printf("Arvore em binário:\n");
     MostreArvoreBin(a);
 
     return 0;
