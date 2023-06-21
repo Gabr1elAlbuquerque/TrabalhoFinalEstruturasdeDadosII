@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 
 typedef struct NoArvore{
 	int valor;
 	unsigned long long binario;
+	char *BinarioString;
 	struct NoArvore *E;
 	struct NoArvore *D;
 }NoArvore;
@@ -28,20 +28,31 @@ Arvore * ArvoreNovo(void){
     }
     return a;
 }
-unsigned long long converterbinario(unsigned long long num) {
-    unsigned long long valor_binario = 0;
-    unsigned long long posicao = 1;
+unsigned long long ConverterBinario(unsigned long long Num) {
+    unsigned long long ValorBinario = 0;
+    unsigned long long Posicao = 1;
 
-    while (num > 0) {
-        valor_binario += (num % 2) * posicao;
-        num /= 2;
-        posicao *= 10;
+    while (Num > 0) {
+        ValorBinario += (Num % 2) * Posicao;
+        Num /= 2;
+        Posicao *= 10;
     }
 
-    return valor_binario;
+    return ValorBinario;
 }
 
-int ArvoreInserir(Arvore *a, int valor){
+char* ConverterBinString(unsigned long long Num, int N) {
+    char* BinarioString = (char*)malloc((N + 1) * sizeof(char));
+    if (BinarioString == NULL) {
+        return NULL;
+    }
+
+    sprintf(BinarioString, "%0*llu", N, Num); 
+
+    return BinarioString;
+}
+
+int ArvoreInserir(Arvore *a, int valor, int n){
 	if(a == NULL){
 		return 0;
 	}
@@ -52,7 +63,8 @@ int ArvoreInserir(Arvore *a, int valor){
 	}
 	
 	novo->valor = valor;
-	novo->binario = converterbinario(novo->valor);
+	novo->binario = ConverterBinario(novo->valor);
+	novo->BinarioString = ConverterBinString(novo->binario,n);
 	novo->E = NULL;
 	novo->D = NULL;
 	
@@ -91,36 +103,15 @@ void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
     fscanf(arquivo, "%d %d %s", k, n, numeros);
 }
 
-void ConverterStrArvore(char *numeros, Arvore *a) {
+void ConverterStrArvore(char *numeros, Arvore *a, int n) {
     char *token;
     token = strtok(numeros, ";");
     while (token != NULL) {
     	int valor = atoi(token);
-        ArvoreInserir(a, valor);
+        ArvoreInserir(a, valor, n);
         token = strtok(NULL, ";");
     }
 }
-
-unsigned long long adicionarZerosEsquerda(unsigned long long binario, int n) {
-    int tamanhoBinario = (int)log2(binario) + 1;
-    int num_zeros = n - tamanhoBinario;
-
-    if (num_zeros <= 0) {
-        return binario;
-    }
-
-    unsigned long long valor_binario = binario;
-    unsigned long long mascara = (unsigned long long)1 << (n - 1);
-
-    while (num_zeros > 0) {
-        valor_binario = valor_binario | mascara;
-        mascara >>= 1;
-        num_zeros--;
-    }
-
-    return valor_binario;
-}
-
 
 void MostreNo(NoArvore *no){
 	if(no != NULL){
@@ -139,7 +130,7 @@ void MostreArvore(Arvore *a){
 void MostreNoBin(NoArvore *no){
 	if(no != NULL){
 		MostreNoBin(no->E);
-		printf("%llu\n", no->binario);
+		printf("%s\n", no->BinarioString);
 		MostreNoBin(no->D);
 	}
 }
@@ -150,18 +141,5 @@ void MostreArvoreBin(Arvore *a){
 	}
 }
 
-void AddZeroNo(NoArvore *no, int n){
-	if(no != NULL){
-		AddZeroNo(no->E, n);
-		adicionarZerosEsquerda(no->binario, n);
-		AddZeroNo(no->D, n);
-	}
-}
-
-void AddZeroArvore(Arvore *a, int n){
-	if (a != NULL){
-		AddZeroNo(a->Raiz,n);
-	}
-}
 
 #endif
