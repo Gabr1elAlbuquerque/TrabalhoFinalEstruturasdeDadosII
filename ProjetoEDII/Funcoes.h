@@ -8,7 +8,6 @@
 
 typedef struct NoArvore{
 	int valor;
-	unsigned long long binario;
 	char *BinarioString;
 	struct NoArvore *E;
 	struct NoArvore *D;
@@ -28,29 +27,25 @@ Arvore * ArvoreNovo(void){
     }
     return a;
 }
-unsigned long long ConverterBinario(unsigned long long Num) {
-    unsigned long long ValorBinario = 0;
-    unsigned long long Posicao = 1;
-
-    while (Num > 0) {
-        ValorBinario += (Num % 2) * Posicao;
-        Num /= 2;
-        Posicao *= 10;
-    }
-
-    return ValorBinario;
-}
-
-char* ConverterBinString(unsigned long long Num, int N) {
+char* ConverterBinString(int Num, int N) {
     char* BinarioString = (char*)malloc((N + 1) * sizeof(char));
     if (BinarioString == NULL) {
         return NULL;
     }
 
-    sprintf(BinarioString, "%0*llu", N, Num); 
+    BinarioString[N] = '\0';
+    for (int i = N - 1; i >= 0; i--) {
+        if (Num >= (1 << i)) {
+            BinarioString[N - 1 - i] = '1';
+            Num -= (1 << i);
+        } else {
+            BinarioString[N - 1 - i] = '0';
+        }
+    }
 
     return BinarioString;
 }
+
 
 int ArvoreInserir(Arvore *a, int valor, int n){
 	if(a == NULL){
@@ -63,8 +58,7 @@ int ArvoreInserir(Arvore *a, int valor, int n){
 	}
 	
 	novo->valor = valor;
-	novo->binario = ConverterBinario(novo->valor);
-	novo->BinarioString = ConverterBinString(novo->binario,n);
+	novo->BinarioString = ConverterBinString(novo->valor,n);
 	novo->E = NULL;
 	novo->D = NULL;
 	
@@ -116,7 +110,7 @@ void ConverterStrArvore(char *numeros, Arvore *a, int n) {
 void MostreNo(NoArvore *no){
 	if(no != NULL){
 		MostreNo(no->E);
-		printf("%lld\n",no->valor);
+		printf("%d\n",no->valor);
 		MostreNo(no->D);
 	}
 }
