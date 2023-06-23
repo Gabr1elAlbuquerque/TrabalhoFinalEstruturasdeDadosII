@@ -18,6 +18,5 @@ int main(int argc, char *argv[]) {
     //MostreArvore(a);
     //printf("Arvore em binário:\n");
 	MostreArvoreBin(a);
-
     return 0;
 }
