@@ -107,6 +107,21 @@ void ConverterStrArvore(char *numeros, Arvore *a, int n) {
     }
 }
 
+void LiberaNo(NoArvore *no){
+	if(no != NULL){
+		LiberaNo(no->E);
+		LiberaNo(no->D);
+		free(no->BinarioString);
+		free(no);
+	}
+}
+
+void LiberaArvore(Arvore *a){
+	if(a != NULL){
+		LiberaNo(a->Raiz);
+	}
+}
+
 void MostreNo(NoArvore *no){
 	if(no != NULL){
 		MostreNo(no->E);
