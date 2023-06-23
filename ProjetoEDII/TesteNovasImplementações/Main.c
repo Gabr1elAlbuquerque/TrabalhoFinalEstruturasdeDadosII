@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     Arvore *a = ArvoreNovo();
 
     ConverterStrArvore(numeros,a, n);
-    //MostreArvore(a);
+    MostreArvore(a);
     //printf("Arvore em binário:\n");
 	MostreArvoreBin(a);
     return 0;
