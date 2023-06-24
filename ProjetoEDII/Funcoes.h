@@ -5,6 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    fscanf(arquivo, "%d %d %s", k, n, numeros);
+}
 
 typedef struct NoArvore{
 	int valor;
@@ -18,7 +26,6 @@ typedef struct Arvore{
 	int Tamanho;
 }Arvore;
 
-
 Arvore * ArvoreNovo(void){
     Arvore *a = (Arvore*)malloc(sizeof(Arvore));
     if(a != NULL){
@@ -27,6 +34,7 @@ Arvore * ArvoreNovo(void){
     }
     return a;
 }
+
 char* ConverterBinString(int Num, int N) {
     char* BinarioString = (char*)malloc((N + 1) * sizeof(char));
     if (BinarioString == NULL) {
@@ -45,7 +53,6 @@ char* ConverterBinString(int Num, int N) {
 
     return BinarioString;
 }
-
 
 int ArvoreInserir(Arvore *a, int valor, int n){
 	if(a == NULL){
@@ -88,15 +95,6 @@ int ArvoreInserir(Arvore *a, int valor, int n){
 	return 1;
 }
 
-void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return;
-    }
-
-    fscanf(arquivo, "%d %d %s", k, n, numeros);
-}
-
 void ConverterStrArvore(char *numeros, Arvore *a, int n) {
     char *token;
     token = strtok(numeros, ";");
@@ -105,6 +103,7 @@ void ConverterStrArvore(char *numeros, Arvore *a, int n) {
         ArvoreInserir(a, valor, n);
         token = strtok(NULL, ";");
     }
+    free(token);
 }
 
 void LiberaNo(NoArvore *no){
@@ -149,6 +148,5 @@ void MostreArvoreBin(Arvore *a){
 		MostreNoBin(a->Raiz);
 	}
 }
-
 
 #endif
