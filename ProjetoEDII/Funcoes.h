@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Leitura do Arquivo txt
 void LerArquivo(FILE *arquivo, int *k, int *n, char *Numeros) {
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
@@ -14,6 +15,7 @@ void LerArquivo(FILE *arquivo, int *k, int *n, char *Numeros) {
     fscanf(arquivo, "%d %d %s", k, n, Numeros);
 }
 
+//definições da arvore
 typedef struct NoArvore{
 	int valor;
 	char *BinarioString;
@@ -35,6 +37,7 @@ Arvore * ArvoreNovo(void){
     return a;
 }
 
+//função que converte os búmeros em binário adicionando os zeros a esquerda se necessário
 char* ConverterBinString(int Num, int N) {
     char* BinarioString = (char*)malloc((N + 1) * sizeof(char));
     if (BinarioString == NULL) {
@@ -54,6 +57,7 @@ char* ConverterBinString(int Num, int N) {
     return BinarioString;
 }
 
+//Função que insere um novo nó na árvore
 int ArvoreInserir(Arvore *a, int valor, int n){
 	if(a == NULL){
 		return 0;
@@ -95,6 +99,7 @@ int ArvoreInserir(Arvore *a, int valor, int n){
 	return 1;
 }
 
+//Função que remore o ; dos números da terceira linha do arquivo 
 void ConverterStrArvore(char *numeros, Arvore *a, int n) {
     char *token;
     token = strtok(numeros, ";");
@@ -106,6 +111,7 @@ void ConverterStrArvore(char *numeros, Arvore *a, int n) {
     free(token);
 }
 
+//função que concatena todos os nós binários para análise
 char* ConcatenaStringNo(NoArvore* no) {
     if (no == NULL) {
         return NULL;
@@ -114,10 +120,11 @@ char* ConcatenaStringNo(NoArvore* no) {
     char* resultadoEsquerda = ConcatenaStringNo(no->E);
     char* resultadoDireita = ConcatenaStringNo(no->D);
 
-    int tamanhoTotal = strlen(no->BinarioString) + 1;
+    int tamanhoTotal = 1; // Tamanho inicial 1 para o caractere nulo '\0'
     if (resultadoEsquerda != NULL) {
         tamanhoTotal += strlen(resultadoEsquerda);
     }
+    tamanhoTotal += strlen(no->BinarioString);
     if (resultadoDireita != NULL) {
         tamanhoTotal += strlen(resultadoDireita);
     }
@@ -128,12 +135,14 @@ char* ConcatenaStringNo(NoArvore* no) {
         return NULL;
     }
 
-    strcpy(resultado, no->BinarioString);
+    resultado[0] = '\0'; // Inicializa com o caractere nulo
 
     if (resultadoEsquerda != NULL) {
         strcat(resultado, resultadoEsquerda);
         free(resultadoEsquerda);
     }
+
+    strcat(resultado, no->BinarioString);
 
     if (resultadoDireita != NULL) {
         strcat(resultado, resultadoDireita);
@@ -148,7 +157,7 @@ char* ConcatenaStringArvore(Arvore* a) {
         return ConcatenaStringNo(a->Raiz);
     }
 }
-
+//função que libera a memória alocada para a arvore após a execução do programa
 void LiberaNo(NoArvore *no){
 	if(no != NULL){
 		LiberaNo(no->E);
@@ -164,6 +173,7 @@ void LiberaArvore(Arvore *a){
 	}
 }
 
+//função para mostrar o a arvore em decimal
 void MostreNo(NoArvore *no){
 	if(no != NULL){
 		MostreNo(no->E);
@@ -178,6 +188,7 @@ void MostreArvore(Arvore *a){
 	}
 }
 
+//função que mostra a árvore em binário
 void MostreNoBin(NoArvore *no){
 	if(no != NULL){
 		MostreNoBin(no->E);
