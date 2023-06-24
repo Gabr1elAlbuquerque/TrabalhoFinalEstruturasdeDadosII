@@ -5,13 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-void LerArquivo(FILE *arquivo, int *k, int *n, char *numeros) {
+void LerArquivo(FILE *arquivo, int *k, int *n, char *Numeros) {
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return;
     }
 
-    fscanf(arquivo, "%d %d %s", k, n, numeros);
+    fscanf(arquivo, "%d %d %s", k, n, Numeros);
 }
 
 typedef struct NoArvore{
@@ -104,6 +104,49 @@ void ConverterStrArvore(char *numeros, Arvore *a, int n) {
         token = strtok(NULL, ";");
     }
     free(token);
+}
+
+char* ConcatenaStringNo(NoArvore* no) {
+    if (no == NULL) {
+        return NULL;
+    }
+
+    char* resultadoEsquerda = ConcatenaStringNo(no->E);
+    char* resultadoDireita = ConcatenaStringNo(no->D);
+
+    int tamanhoTotal = strlen(no->BinarioString) + 1;
+    if (resultadoEsquerda != NULL) {
+        tamanhoTotal += strlen(resultadoEsquerda);
+    }
+    if (resultadoDireita != NULL) {
+        tamanhoTotal += strlen(resultadoDireita);
+    }
+
+    char* resultado = (char*)malloc(tamanhoTotal * sizeof(char));
+    if (resultado == NULL) {
+        printf("Erro na alocação de memória.\n");
+        return NULL;
+    }
+
+    strcpy(resultado, no->BinarioString);
+
+    if (resultadoEsquerda != NULL) {
+        strcat(resultado, resultadoEsquerda);
+        free(resultadoEsquerda);
+    }
+
+    if (resultadoDireita != NULL) {
+        strcat(resultado, resultadoDireita);
+        free(resultadoDireita);
+    }
+
+    return resultado;
+}
+
+char* ConcatenaStringArvore(Arvore* a) {
+    if (a != NULL) {
+        return ConcatenaStringNo(a->Raiz);
+    }
 }
 
 void LiberaNo(NoArvore *no){

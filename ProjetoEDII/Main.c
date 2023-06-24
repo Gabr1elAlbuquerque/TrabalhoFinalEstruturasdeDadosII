@@ -3,12 +3,12 @@ int main(int argc, char *argv[]) {
 	
 	int QtdNumeros = 130000;
 	int TamanhoVetor = QtdNumeros * 10 + 1;
-    char *numeros = malloc(TamanhoVetor * sizeof(char));
+    char *Numeros = malloc(TamanhoVetor * sizeof(char));
     
     int k = 0, n = 0;
 
     FILE *arquivo = fopen(argv[1], "r");
-    LerArquivo(arquivo, &k, &n, numeros);
+    LerArquivo(arquivo, &k, &n, Numeros);
     fclose(arquivo);
 
     printf("Valor de K: %d\n", k);
@@ -17,9 +17,10 @@ int main(int argc, char *argv[]) {
     
     Arvore *a = ArvoreNovo();
 
-    ConverterStrArvore(numeros,a, n);
+    ConverterStrArvore(Numeros,a, n);
+    char *Concatenado = ConcatenaStringArvore(a);
 	MostreArvoreBin(a);
+	printf("String Concatenada: %s", Concatenado);
 	LiberaArvore(a);
-	printf("%d\n", a->Tamanho);
     return 0;
 }
