@@ -120,7 +120,7 @@ char* ConcatenaStringNo(NoArvore* no) {
     char* resultadoEsquerda = ConcatenaStringNo(no->E);
     char* resultadoDireita = ConcatenaStringNo(no->D);
 
-    int tamanhoTotal = 1; // Tamanho inicial 1 para o caractere nulo '\0'
+    int tamanhoTotal = 1;
     if (resultadoEsquerda != NULL) {
         tamanhoTotal += strlen(resultadoEsquerda);
     }
@@ -135,7 +135,7 @@ char* ConcatenaStringNo(NoArvore* no) {
         return NULL;
     }
 
-    resultado[0] = '\0'; // Inicializa com o caractere nulo
+    resultado[0] = '\0';
 
     if (resultadoEsquerda != NULL) {
         strcat(resultado, resultadoEsquerda);

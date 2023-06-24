@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
     ConverterStrArvore(Numeros,a, n);
     char *Concatenado = ConcatenaStringArvore(a);
-	MostreArvoreBin(a);
+	//MostreArvoreBin(a);
 	printf("String Concatenada: %s", Concatenado);
 	LiberaArvore(a);
     return 0;
