@@ -1,7 +1,11 @@
 #include "Funcoes.h"
 int main(int argc, char *argv[]) {
-    char numeros[1000000];
-    int k, n;
+	
+	int QtdNumeros = 130000;
+	int TamanhoVetor = QtdNumeros * 10 + 1;
+    char *numeros = malloc(TamanhoVetor * sizeof(char));
+    
+    int k = 0, n = 0;
 
     FILE *arquivo = fopen(argv[1], "r");
     LerArquivo(arquivo, &k, &n, numeros);
@@ -16,6 +20,6 @@ int main(int argc, char *argv[]) {
     ConverterStrArvore(numeros,a, n);
 	MostreArvoreBin(a);
 	LiberaArvore(a);
-	
+	printf("%d\n", a->Tamanho);
     return 0;
 }
