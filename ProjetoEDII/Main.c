@@ -10,17 +10,12 @@ int main(int argc, char *argv[]) {
     FILE *arquivo = fopen(argv[1], "r");
     LerArquivo(arquivo, &k, &n, Numeros);
     fclose(arquivo);
-
-    printf("Valor de K: %d\n", k);
-    printf("Valor de N: %d\n", n);
-    printf("Arvore Inicio:\n");
     
     Arvore *a = ArvoreNovo();
 
     ConverterStrArvore(Numeros,a, n);
     char *Concatenado = ConcatenaStringArvore(a);
-	//MostreArvoreBin(a);
-	printf("String Concatenada: %s", Concatenado);
+	contarCombinacoesRepetidas(Concatenado,k);
 	LiberaArvore(a);
     return 0;
 }

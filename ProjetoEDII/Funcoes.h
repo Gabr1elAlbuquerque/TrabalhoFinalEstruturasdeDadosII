@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 //Leitura do Arquivo txt
 void LerArquivo(FILE *arquivo, int *k, int *n, char *Numeros) {
@@ -157,6 +158,59 @@ char* ConcatenaStringArvore(Arvore* a) {
         return ConcatenaStringNo(a->Raiz);
     }
 }
+
+void contarCombinacoesRepetidas(char* concatenado, int k) {
+    int numCombinacoes = 1 << k;  // Número total de combinações
+    int* contadores = (int*)calloc(numCombinacoes, sizeof(int));
+    if (contadores == NULL) {
+        printf("Erro na alocação de memória.\n");
+        return;
+    }
+
+    int stringLength = strlen(concatenado);
+    for (int i = 0; i <= stringLength - k; i++) {
+        int combinacao = 0;
+        for (int j = 0; j < k; j++) {
+            combinacao = (combinacao << 1) | (concatenado[i + j] - '0');
+        }
+        contadores[combinacao]++;
+    }
+
+    // Criar um array de índices para ordenação
+    int* indices = (int*)malloc(numCombinacoes * sizeof(int));
+    if (indices == NULL) {
+        printf("Erro na alocação de memória.\n");
+        free(contadores);
+        return;
+    }
+    for (int i = 0; i < numCombinacoes; i++) {
+        indices[i] = i;
+    }
+
+    // Ordenação em ordem decrescente
+    for (int i = 0; i < numCombinacoes - 1; i++) {
+        for (int j = i + 1; j < numCombinacoes; j++) {
+            if (contadores[indices[j]] > contadores[indices[i]]) {
+                // Troca de posições
+                int temp = indices[i];
+                indices[i] = indices[j];
+                indices[j] = temp;
+            }
+        }
+    }
+
+    // Exibir as combinações em ordem decrescente de ocorrência
+    for (int i = 0; i < numCombinacoes; i++) {
+        for (int j = k - 1; j >= 0; j--) {
+            printf("%d", (indices[i] >> j) & 1);
+        }
+        printf(" - %d\n", contadores[indices[i]]);
+    }
+
+    free(contadores);
+    free(indices);
+}
+
 //função que libera a memória alocada para a arvore após a execução do programa
 void LiberaNo(NoArvore *no){
 	if(no != NULL){
