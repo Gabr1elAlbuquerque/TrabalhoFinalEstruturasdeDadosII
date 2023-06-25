@@ -8,12 +8,9 @@
 
 //Leitura do Arquivo txt
 void LerArquivo(FILE *arquivo, int *k, int *n, char *Numeros) {
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return;
+    if (arquivo != NULL) {
+        fscanf(arquivo, "%d %d %s", k, n, Numeros);
     }
-
-    fscanf(arquivo, "%d %d %s", k, n, Numeros);
 }
 
 //definições da arvore
