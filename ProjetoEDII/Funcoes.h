@@ -159,7 +159,7 @@ char* ConcatenaStringArvore(Arvore* a) {
     }
 }
 
-void contarCombinacoesRepetidas(char* concatenado, int k) {
+void ContarCombinacoesRepetidas(char* concatenado, int k) {
     int numCombinacoes = 1 << k;  // Número total de combinações
     int* contadores = (int*)calloc(numCombinacoes, sizeof(int));
     if (contadores == NULL) {
@@ -187,11 +187,10 @@ void contarCombinacoesRepetidas(char* concatenado, int k) {
         indices[i] = i;
     }
 
-    // Ordenação em ordem decrescente
+
     for (int i = 0; i < numCombinacoes - 1; i++) {
         for (int j = i + 1; j < numCombinacoes; j++) {
             if (contadores[indices[j]] > contadores[indices[i]]) {
-                // Troca de posições
                 int temp = indices[i];
                 indices[i] = indices[j];
                 indices[j] = temp;
@@ -199,7 +198,6 @@ void contarCombinacoesRepetidas(char* concatenado, int k) {
         }
     }
 
-    // Exibir as combinações em ordem decrescente de ocorrência
     for (int i = 0; i < numCombinacoes; i++) {
         for (int j = k - 1; j >= 0; j--) {
             printf("%d", (indices[i] >> j) & 1);
@@ -211,7 +209,6 @@ void contarCombinacoesRepetidas(char* concatenado, int k) {
     free(indices);
 }
 
-//função que libera a memória alocada para a arvore após a execução do programa
 void LiberaNo(NoArvore *no){
 	if(no != NULL){
 		LiberaNo(no->E);
