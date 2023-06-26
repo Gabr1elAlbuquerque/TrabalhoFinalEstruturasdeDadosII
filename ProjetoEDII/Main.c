@@ -8,11 +8,11 @@ int main(int argc, char *argv[]) {
     
     int k = 0, n = 0;
 
-    FILE *arquivo = fopen(argv[1], "r");
+    FILE *entrada = fopen(argv[1], "r");
     
-    LerArquivo(arquivo, &k, &n, Numeros);
+    LerEntrada(entrada, &k, &n, Numeros);
     
-    fclose(arquivo);
+    fclose(entrada);
     
     Arvore *a = ArvoreNovo();
 

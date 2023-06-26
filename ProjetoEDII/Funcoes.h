@@ -7,9 +7,9 @@
 #include <math.h>
 
 //Leitura do Arquivo txt
-void LerArquivo(FILE *arquivo, int *k, int *n, char *Numeros) {
-    if (arquivo != NULL) {
-        fscanf(arquivo, "%d %d %s", k, n, Numeros);
+void LerEntrada(FILE *entrada, int *k, int *n, char *Numeros) {
+    if (entrada != NULL) {
+        fscanf(entrada, "%d %d %s", k, n, Numeros);
     }
 }
 
@@ -99,14 +99,14 @@ int ArvoreInserir(Arvore *a, int valor, int n){
 
 //Função que remore o ; dos números da terceira linha do arquivo 
 void ConverterStrArvore(char *numeros, Arvore *a, int n) {
-    char *token;
-    token = strtok(numeros, ";");
-    while (token != NULL) {
-    	int valor = atoi(token);
+    char *NumerosSemPontoVirgula;
+    NumerosSemPontoVirgula = strtok(numeros, ";");
+    while (NumerosSemPontoVirgula != NULL) {
+    	int valor = atoi(NumerosSemPontoVirgula);
         ArvoreInserir(a, valor, n);
-        token = strtok(NULL, ";");
+        NumerosSemPontoVirgula = strtok(NULL, ";");
     }
-    free(token);
+    free(NumerosSemPontoVirgula);
 }
 
 //função que concatena todos os nós binários para análise
@@ -115,16 +115,16 @@ char* ConcatenaStringNo(NoArvore* no) {
         return NULL;
     }
 
-    char* resultadoEsquerda = ConcatenaStringNo(no->E);
-    char* resultadoDireita = ConcatenaStringNo(no->D);
+    char* ConcatenacaoEsquerda = ConcatenaStringNo(no->E);
+    char* ConcatenacaoDireita = ConcatenaStringNo(no->D);
 
     int tamanhoTotal = 1;
-    if (resultadoEsquerda != NULL) {
-        tamanhoTotal += strlen(resultadoEsquerda);
+    if (ConcatenacaoEsquerda != NULL) {
+        tamanhoTotal += strlen(ConcatenacaoEsquerda);
     }
     tamanhoTotal += strlen(no->BinarioString);
-    if (resultadoDireita != NULL) {
-        tamanhoTotal += strlen(resultadoDireita);
+    if (ConcatenacaoDireita != NULL) {
+        tamanhoTotal += strlen(ConcatenacaoDireita);
     }
 
     char* resultado = (char*)malloc(tamanhoTotal * sizeof(char));
@@ -135,16 +135,16 @@ char* ConcatenaStringNo(NoArvore* no) {
 
     resultado[0] = '\0';
 
-    if (resultadoEsquerda != NULL) {
-        strcat(resultado, resultadoEsquerda);
-        free(resultadoEsquerda);
+    if (ConcatenacaoEsquerda != NULL) {
+        strcat(resultado, ConcatenacaoEsquerda);
+        free(ConcatenacaoEsquerda);
     }
 
     strcat(resultado, no->BinarioString);
 
-    if (resultadoDireita != NULL) {
-        strcat(resultado, resultadoDireita);
-        free(resultadoDireita);
+    if (ConcatenacaoDireita != NULL) {
+        strcat(resultado, ConcatenacaoDireita);
+        free(ConcatenacaoDireita);
     }
 
     return resultado;
@@ -157,15 +157,15 @@ char* ConcatenaStringArvore(Arvore* a) {
 }
 
 void ContarCombinacoesRepetidas(char* concatenado, int k) {
-    int numCombinacoes = 1 << k;  // Número total de combinações
+    int numCombinacoes = 1 << k;
     int* contadores = (int*)calloc(numCombinacoes, sizeof(int));
     if (contadores == NULL) {
         printf("Nao foi possivel alocar memoria.\n");
         return;
     }
 
-    int stringLength = strlen(concatenado);
-    for (int i = 0; i <= stringLength - k; i++) {
+    int TamanhoString = strlen(concatenado);
+    for (int i = 0; i <= TamanhoString - k; i++) {
         int combinacao = 0;
         for (int j = 0; j < k; j++) {
             combinacao = (combinacao << 1) | (concatenado[i + j] - '0');
