@@ -37,7 +37,7 @@ Arvore * ArvoreNovo(void){
 }
 
 //função que converte os búmeros em binário adicionando os zeros a esquerda se necessário
-char* ConverterBinString(int Num, int N) {
+char* ConverterBinarioEmString(int Num, int N) {
     char* BinarioString = (char*)malloc((N + 1) * sizeof(char));
     if (BinarioString == NULL) {
         return NULL;
@@ -68,7 +68,7 @@ int ArvoreInserir(Arvore *a, int valor, int n){
 	}
 	
 	novo->valor = valor;
-	novo->BinarioString = ConverterBinString(novo->valor,n);
+	novo->BinarioString = ConverterBinarioEmString(novo->valor,n);
 	novo->E = NULL;
 	novo->D = NULL;
 	
@@ -159,7 +159,7 @@ char* ConcatenaStringArvore(Arvore* a) {
 }
 
 
-void ContarCombinacoesRepetidas(char* concatenado, int k) {
+void ContarCombinacoesRepetidas(char* ArvoreConcatenada, int k) {
     int numCombinacoes = 1 << k;
     int* contadores = (int*)calloc(numCombinacoes, sizeof(int));
     if (contadores == NULL) {
@@ -167,16 +167,16 @@ void ContarCombinacoesRepetidas(char* concatenado, int k) {
         return;
     }
 
-    int TamanhoString = strlen(concatenado);
+    int TamanhoString = strlen(ArvoreConcatenada);
     for (int i = 0; i <= TamanhoString - k; i++) {
         int combinacao = 0;
         for (int j = 0; j < k; j++) {
-            combinacao = (combinacao << 1) | (concatenado[i + j] - '0');
+            combinacao = (combinacao << 1) | (ArvoreConcatenada[i + j] - '0');
         }
         contadores[combinacao]++;
     }
 
-    // Criar um array de índices para ordenação
+    
     int* indices = (int*)malloc(numCombinacoes * sizeof(int));
     if (indices == NULL) {
         printf("Nao foi possivel alocar memoria.\n");

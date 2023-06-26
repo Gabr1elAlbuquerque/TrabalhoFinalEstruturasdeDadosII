@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
 
     ConverterStrArvore(Numeros,a, n);
     
-    char *Concatenado = ConcatenaStringArvore(a);
+    char *ArvoreConcatenada = ConcatenaStringArvore(a);
     
-	ContarCombinacoesRepetidas(Concatenado,k);
+	ContarCombinacoesRepetidas(ArvoreConcatenada,k);
 	
 	LiberaArvore(a);
 	
