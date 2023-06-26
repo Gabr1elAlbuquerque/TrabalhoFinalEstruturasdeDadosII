@@ -129,7 +129,7 @@ char* ConcatenaStringNo(NoArvore* no) {
 
     char* resultado = (char*)malloc(tamanhoTotal * sizeof(char));
     if (resultado == NULL) {
-        printf("Erro na alocação de memória.\n");
+        printf("Nao foi possivel alocar memoria.\n");
         return NULL;
     }
 
@@ -160,7 +160,7 @@ void ContarCombinacoesRepetidas(char* concatenado, int k) {
     int numCombinacoes = 1 << k;  // Número total de combinações
     int* contadores = (int*)calloc(numCombinacoes, sizeof(int));
     if (contadores == NULL) {
-        printf("Erro na alocação de memória.\n");
+        printf("Nao foi possivel alocar memoria.\n");
         return;
     }
 
@@ -176,7 +176,7 @@ void ContarCombinacoesRepetidas(char* concatenado, int k) {
     // Criar um array de índices para ordenação
     int* indices = (int*)malloc(numCombinacoes * sizeof(int));
     if (indices == NULL) {
-        printf("Erro na alocação de memória.\n");
+        printf("Nao foi possivel alocar memoria.\n");
         free(contadores);
         return;
     }
