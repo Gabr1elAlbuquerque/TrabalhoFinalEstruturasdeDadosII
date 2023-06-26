@@ -11,7 +11,6 @@ int main(int argc, char *argv[]) {
     FILE *entrada = fopen(argv[1], "r");
     
     LerEntrada(entrada, &k, &n, Numeros);
-    
     fclose(entrada);
     
     Arvore *a = ArvoreNovo();

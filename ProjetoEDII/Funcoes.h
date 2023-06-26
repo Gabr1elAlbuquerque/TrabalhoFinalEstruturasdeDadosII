@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+
 
 //Leitura do Arquivo txt
 void LerEntrada(FILE *entrada, int *k, int *n, char *Numeros) {
@@ -25,6 +25,7 @@ typedef struct Arvore{
 	NoArvore *Raiz;
 	int Tamanho;
 }Arvore;
+
 
 Arvore * ArvoreNovo(void){
     Arvore *a = (Arvore*)malloc(sizeof(Arvore));
@@ -150,11 +151,13 @@ char* ConcatenaStringNo(NoArvore* no) {
     return resultado;
 }
 
+
 char* ConcatenaStringArvore(Arvore* a) {
     if (a != NULL) {
         return ConcatenaStringNo(a->Raiz);
     }
 }
+
 
 void ContarCombinacoesRepetidas(char* concatenado, int k) {
     int numCombinacoes = 1 << k;
@@ -206,6 +209,7 @@ void ContarCombinacoesRepetidas(char* concatenado, int k) {
     free(indices);
 }
 
+
 void LiberaNo(NoArvore *no){
 	if(no != NULL){
 		LiberaNo(no->E);
@@ -214,6 +218,7 @@ void LiberaNo(NoArvore *no){
 		free(no);
 	}
 }
+
 
 void LiberaArvore(Arvore *a){
 	if(a != NULL){
@@ -230,6 +235,7 @@ void MostreNo(NoArvore *no){
 	}
 }
 
+
 void MostreArvore(Arvore *a){
 	if(a != NULL){
 		MostreNo(a->Raiz);
@@ -244,6 +250,7 @@ void MostreNoBin(NoArvore *no){
 		MostreNoBin(no->D);
 	}
 }
+
 
 void MostreArvoreBin(Arvore *a){
 	if(a != NULL){
