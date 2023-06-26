@@ -11,6 +11,9 @@ void LerEntrada(FILE *entrada, int *k, int *n, char *Numeros) {
     if (entrada != NULL) {
         fscanf(entrada, "%d %d %s", k, n, Numeros);
     }
+    else{
+    	printf("Forneca uma entrada valida.\n");
+	}
 }
 
 //definições da arvore
